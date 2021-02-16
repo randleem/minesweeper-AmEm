@@ -43,3 +43,36 @@
   - getNeighbours()
 
 ## Cell Component
+
+- Cell uses getValue() method
+- Cell needs to be an object
+- set state
+  - isRevealed :bool
+  - isMine :bool
+  - isFlagged :bool
+  - valueDisplay - function getValue() (add logic)
+
+## Possibilities of Cell
+
+- If the cell is not yet revealed we return a null value.
+- If the cell is not revealed but is flagged by the user we return a flag(🚩).
+- If the cell is revealed and is a mine we return a bomb(💣).
+- If the cell is revealed we return the number of neighbour mines for that cell.
+- If the cell is revealed and has zero mines in its neighbouring cells, we return a null value.
+
+## Render
+
+- Cell to display value
+- Cell with onClick
+- potetially use 'useReducer' with e.target for difference between left and right click.
+
+- if rigt click = flagged
+- if left click = rest of logic
+
+handleClick: function(e) {
+if (e.type === 'click') {
+console.log('Left click');
+} else if (e.type === 'contextmenu') {
+console.log('Right click');
+}
+}
