@@ -1,10 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
 
-function Cell({value}) {
-  
+// const cellItemShape = {
+//   isRevealed: PropTypes.bool,
+//   isMine: PropTypes.bool,
+//   isFlagged: PropTypes.bool,
+// };
+function Cell({ value, onClick, cMenu }) {
   function getValue() {
     if (!value.isRevealed) {
-      return this.props.value.isFlagged ? "🚩" : null;
+      return value.isFlagged ? "🚩" : null;
     }
     if (value.isMine) {
       return "💣";
@@ -14,14 +18,15 @@ function Cell({value}) {
     }
     return value.neighbour;
   }
- 
-  function valueDisplay(){
-      const
-  }
+  let className =
+    "cell" +
+    (value.isRevealed ? "" : " hidden") +
+    (value.isMine ? " is-mine" : "") +
+    (value.isFlagged ? " is-flag" : "");
 
   return (
-    <div onClick={handleClick} className="cell">
-      {getValue}
+    <div onClick={onClick} className={className} onContextMenu={cMenu}>
+      {getValue()}
     </div>
   );
 }
