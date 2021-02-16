@@ -3,22 +3,26 @@ import Cell from "../Cell/Cell";
 
 function Board({ gameProps }) {
   let { height, width, mines } = gameProps;
+  
   const [boardData, setBoardData] = useState(
     initBoardData(height, width, mines)
   );
+  console.log(boardData);
   const [gameStatus, setGameStatus] = useState("Game about to Start");
   const [mineCount, setMineCount] = useState(gameProps.mines);
 
   // Gets initial board data
   function initBoardData(height, width, mines) {
     let data = createEmptyArray(height, width);
-    console.log(`${data} createEmptyArray`);
+    
     data = plantMines(data, height, width, mines);
-    console.log(`${data} plantMines`);
+    //console.log(`${data} plantMines`);
     data = getNeighbours(data, height, width);
-    console.log(`${data} getNeighbours`);
+    console.log(data);
     return data;
+
   }
+
   //Creates an array of objects representing the board.
   function createEmptyArray(height, width) {
     let dataArray = [];
@@ -37,7 +41,7 @@ function Board({ gameProps }) {
         };
       }
     }
-    console.log(dataArray);
+    //console.log('thisis dataArra', dataArray);
     return dataArray;
   }
 
@@ -70,9 +74,9 @@ function Board({ gameProps }) {
     let mineArray = [];
 
     data.map((datarow) => {
-      return datarow.map((dataitem) => {
+      datarow.map((dataitem) => {
         if (dataitem.isMine) {
-          return mineArray.push(dataitem);
+          mineArray.push(dataitem);
         }
       });
     });
@@ -85,9 +89,9 @@ function Board({ gameProps }) {
     let mineArray = [];
 
     data.map((datarow) => {
-      return datarow.map((dataitem) => {
+      datarow.map((dataitem) => {
         if (dataitem.isFlagged) {
-          return mineArray.push(dataitem);
+          mineArray.push(dataitem);
         }
       });
     });
@@ -100,9 +104,9 @@ function Board({ gameProps }) {
     let mineArray = [];
 
     data.map((datarow) => {
-      return datarow.map((dataitem) => {
+       datarow.map((dataitem) => {
         if (!dataitem.isRevealed) {
-          return mineArray.push(dataitem);
+          mineArray.push(dataitem);
         }
       });
     });
@@ -120,7 +124,7 @@ function Board({ gameProps }) {
     }
 
     //down
-    if (x < boardData.height - 1) {
+    if (x < gameProps.height - 1) {
       el.push(data[x + 1][y]);
     }
 
@@ -130,7 +134,7 @@ function Board({ gameProps }) {
     }
 
     //right
-    if (y < boardData.width - 1) {
+    if (y < gameProps.width - 1) {
       el.push(data[x][y + 1]);
     }
 
@@ -140,17 +144,17 @@ function Board({ gameProps }) {
     }
 
     // top right
-    if (x > 0 && y < boardData.width - 1) {
+    if (x > 0 && y < gameProps.width - 1) {
       el.push(data[x - 1][y + 1]);
     }
 
     // bottom right
-    if (x < boardData.height - 1 && y < boardData.width - 1) {
+    if (x < gameProps.height - 1 && y < gameProps.width - 1) {
       el.push(data[x + 1][y + 1]);
     }
 
     // bottom left
-    if (x < boardData.height - 1 && y > 0) {
+    if (x < gameProps.height - 1 && y > 0) {
       el.push(data[x + 1][y - 1]);
     }
 
@@ -158,8 +162,10 @@ function Board({ gameProps }) {
   }
   // get number of neighbouring mines for each board cell
   function getNeighbours(data, height, width) {
+    // why is index used 
     let index = 0;
-    let updatedData = (data, index);
+    // lok at properly
+    let updatedData = data;
 
     for (let i = 0; i < height; i++) {
       for (let j = 0; j < width; j++) {
@@ -231,7 +237,7 @@ function Board({ gameProps }) {
       updatedData = revealEmpty(x, y, updatedData);
     }
 
-    if (getHidden(updatedData).length === boardData.mines) {
+    if (getHidden(updatedData).length === gameProps.mines) {
       setMineCount(0);
       setGameStatus("You Win.");
       revealBoard();
@@ -239,7 +245,7 @@ function Board({ gameProps }) {
     }
 
     setBoardData(updatedData);
-    setMineCount(boardData.mines - getFlags(updatedData).length);
+    setMineCount(gameProps.mines - getFlags(updatedData).length);
   }
 
   // right click
