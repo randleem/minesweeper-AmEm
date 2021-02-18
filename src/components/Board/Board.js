@@ -243,6 +243,7 @@ function Board({ gameProps }) {
 
   // right click
   function handleContextMenu(e, x, y) {
+    debugger;
     e.preventDefault();
     let updatedData = boardData;
     let mines = mineCount;
@@ -256,6 +257,7 @@ function Board({ gameProps }) {
       updatedData[x][y].isFlagged = false;
       mines++;
     } else {
+      console.log("hey from flag minus");
       updatedData[x][y].isFlagged = true;
       mines--;
     }

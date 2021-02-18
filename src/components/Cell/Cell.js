@@ -9,9 +9,10 @@ function Cell({ value, onClick, cMenu }) {
   const [seeCell, setSeeCell] = useState(false);
 
   function getValue() {
-    console.log("hi1");
+    console.log(value.isRevealed);
 
     if (!value.isRevealed) {
+      console.log("hi2");
       return value.isFlagged ? "🚩" : null;
     } else if (value.isMine) {
       console.log("hi4");
