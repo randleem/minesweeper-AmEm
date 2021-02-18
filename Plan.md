@@ -1,5 +1,8 @@
 # Minesweeper
 
+https://codeburst.io/learning-react-js-by-building-a-minesweeper-game-ced9d41560ed
+https://stackblitz.com/edit/react-minesweeper?file=component%2FBoard.js
+
 ## 3 Components
 
 - Cell (button) - represents 1 square onthe board
