@@ -12,7 +12,7 @@ body {
 
 .clear {
   clear: both;
-  content: '';
+  content: "";
 }
 
 .game {
@@ -50,15 +50,13 @@ body {
   color: #fff;
   font-weight: 600;
 }
-.cell:focus {
-  outline: none;
-}
-
-.hidden {
-  background: #2e2829;
-}
-
 .is-flag,
 .is-mine {
-  color: #fc543c;
+  background: #fc543c;
+}
+/* :focus {
+  outline: none;
+} */
+.hidden {
+  background: #2e2829;
 }

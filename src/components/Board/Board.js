@@ -3,7 +3,7 @@ import Cell from "../Cell/Cell";
 
 function Board({ gameProps }) {
   let { height, width, mines } = gameProps;
-  
+
   const [boardData, setBoardData] = useState(
     initBoardData(height, width, mines)
   );
@@ -14,13 +14,12 @@ function Board({ gameProps }) {
   // Gets initial board data
   function initBoardData(height, width, mines) {
     let data = createEmptyArray(height, width);
-    
+
     data = plantMines(data, height, width, mines);
     //console.log(`${data} plantMines`);
     data = getNeighbours(data, height, width);
     console.log(data);
     return data;
-
   }
 
   //Creates an array of objects representing the board.
@@ -104,7 +103,7 @@ function Board({ gameProps }) {
     let mineArray = [];
 
     data.map((datarow) => {
-       datarow.map((dataitem) => {
+      datarow.map((dataitem) => {
         if (!dataitem.isRevealed) {
           mineArray.push(dataitem);
         }
@@ -162,7 +161,7 @@ function Board({ gameProps }) {
   }
   // get number of neighbouring mines for each board cell
   function getNeighbours(data, height, width) {
-    // why is index used 
+    // why is index used
     let index = 0;
     // lok at properly
     let updatedData = data;
@@ -220,24 +219,18 @@ function Board({ gameProps }) {
 
   function handleCellClick(x, y) {
     // check if revealed. return if true.
-    if (boardData[x][y].isRevealed || boardData[x][y].isFlagged) return null;
-
-    // check if mine. game over if true
-    if (boardData[x][y].isMine) {
-      setGameStatus("You Lost.");
-      revealBoard();
-      alert("game over");
-    }
-
     let updatedData = boardData;
     updatedData[x][y].isFlagged = false;
     updatedData[x][y].isRevealed = true;
-
-    if (updatedData[x][y].isEmpty) {
+    if (boardData[x][y].isRevealed || boardData[x][y].isFlagged) return null;
+    // check if mine. game over if true
+    else if (boardData[x][y].isMine) {
+      setGameStatus("You Lost.");
+      revealBoard();
+      alert("game over");
+    } else if (updatedData[x][y].isEmpty) {
       updatedData = revealEmpty(x, y, updatedData);
-    }
-
-    if (getHidden(updatedData).length === gameProps.mines) {
+    } else if (getHidden(updatedData).length === gameProps.mines) {
       setMineCount(0);
       setGameStatus("You Win.");
       revealBoard();
@@ -255,7 +248,9 @@ function Board({ gameProps }) {
     let mines = mineCount;
 
     // check if already revealed
-    if (updatedData[x][y].isRevealed) return;
+    if (updatedData[x][y].isRevealed) {
+      return;
+    }
 
     if (updatedData[x][y].isFlagged) {
       updatedData[x][y].isFlagged = false;
@@ -280,8 +275,8 @@ function Board({ gameProps }) {
     setMineCount(mines);
   }
 
-  function renderBoard(data) {
-    return data.map((datarow) => {
+  function renderBoard(boarddata) {
+    return boarddata.map((datarow) => {
       return datarow.map((dataitem) => {
         return (
           <div key={dataitem.x * datarow.length + dataitem.y}>
@@ -300,6 +295,7 @@ function Board({ gameProps }) {
       });
     });
   }
+  console.log(boardData);
 
   return (
     <div className="board">

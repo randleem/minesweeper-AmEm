@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 // const cellItemShape = {
 //   isRevealed: PropTypes.bool,
@@ -6,27 +6,36 @@ import React from "react";
 //   isFlagged: PropTypes.bool,
 // };
 function Cell({ value, onClick, cMenu }) {
+  const [seeCell, setSeeCell] = useState(false);
+
   function getValue() {
+    console.log("hi1");
+
     if (!value.isRevealed) {
       return value.isFlagged ? "🚩" : null;
-    }
-    if (value.isMine) {
+    } else if (value.isMine) {
+      console.log("hi4");
       return "💣";
-    }
-    if (value.neighbour === 0) {
+    } else if (value.neighbour === 0) {
+      console.log("hi5");
       return null;
     }
+    console.log("finished");
     return value.neighbour;
   }
+  console.log(value);
   let className =
     "cell" +
     (value.isRevealed ? "" : " hidden") +
     (value.isMine ? " is-mine" : "") +
     (value.isFlagged ? " is-flag" : "");
-
+  function handleClick() {
+    onClick();
+    setSeeCell(true);
+  }
   return (
-    <div onClick={onClick} className={className} onContextMenu={cMenu}>
-      {getValue()}
+    <div onClick={handleClick} className={className} onContextMenu={cMenu}>
+      {seeCell && getValue()}
     </div>
   );
 }
