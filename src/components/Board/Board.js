@@ -240,7 +240,7 @@ function Board({ gameProps }) {
     setBoardData(updatedData);
     setMineCount(gameProps.mines - getFlags(updatedData).length);
   }
-
+// adding text for a test
   // right click
   function handleContextMenu(e, x, y) {
     debugger;
